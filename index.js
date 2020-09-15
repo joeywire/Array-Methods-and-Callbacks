@@ -144,7 +144,7 @@ function getCountryWins(array, teamInitials) {
             teamWins += 1;
         }
     });
-    return teamWins;
+    return `Team ${teamInitials} have won ${teamWins} World Cup games!`;
 };
 
 console.log(getCountryWins(fifaData, "USA"));
