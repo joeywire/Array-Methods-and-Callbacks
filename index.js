@@ -120,9 +120,7 @@ function getAverageGoals(array) {
     let totalHome = array.reduce(function(accumulator, item){
         return accumulator + item['Home Team Goals'];
     }, 0);
-    const awayAvg = totalAway/array.length;
-    const homeAvg = totalHome/array.length; 
-    return `Average Home Goals: ${homeAvg}, Average Away Goals: ${awayAvg}`;
+    return `Average Home Goals: ${totalHome/array.length}, Average Away Goals: ${totalAway/array.length}`;
 };
 
 console.log(getAverageGoals(fifaData));
@@ -134,13 +132,22 @@ console.log(getAverageGoals(fifaData));
 Hint: Investigate your data to find "team initials"!
 Hint: use `.reduce` */
 
-function getCountryWins(/* code here */) {
-
-    /* code here */
-
+function getCountryWins(array, teamInitials) {
+    const allTeamGames = array.filter(function(item){
+        return item[`Home Team Initials`] === teamInitials || item[`Away Team Initials`] === teamInitials;
+    });
+    let teamWins = 0; 
+    allTeamGames.forEach(function(item){
+        if (item[`Home Team Initials`] === teamInitials && item['Home Team Goals'] > item['Away Team Goals']){
+            teamWins += 1;
+        } else if (item[`Away Team Initials`] === teamInitials && item['Away Team Goals'] > item['Home Team Goals']){
+            teamWins += 1;
+        }
+    });
+    return teamWins;
 };
 
-getCountryWins();
+console.log(getCountryWins(fifaData, "USA"));
 
 
 /* Stretch 3: Write a function called getGoals() that accepts a parameter `data` and returns the team with the most goals score per appearance (average goals for) in the World Cup finals */
